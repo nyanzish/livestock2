@@ -1,11 +1,17 @@
 
+
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 from django.shortcuts import reverse
 
 
 # Create your models here.
 
+ACCOUNT = (
+    ('Customer', 'Customer'),
+    ('Farmer', 'Farmer'),
+)
 
 CATEGORY_CHOICES = (
     ('Cows', 'Cows'),
@@ -14,6 +20,12 @@ CATEGORY_CHOICES = (
     ('Goats', 'Goats')
 )
 
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    type = models.CharField( max_length=8,
+                             choices=ACCOUNT,
+                             default='Customer')
 
 class Item(models.Model):
     title = models.CharField(max_length=100)
